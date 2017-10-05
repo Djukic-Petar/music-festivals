@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h3>Dodaj festival</h3>
+        <hr/>
+        <h:form>
+            <p:messages/>
+            <p:fieldset style="margin-bottom:6px;" legend="Osnovne informacije" rendered="#{festivalBean.step == 0}">
+                <b:panelGrid columns="2">
+                    Naziv: <b:inputText value="#{festivalBean.festival.naziv}" required="true" requiredMessage="Morate uneti naziv festivala!"/>
+                    Mesto: <b:inputText value="#{festivalBean.festival.mesto}" required="true" requiredMessage="Morate uneti mesto odrzavanja festivala!"/>
+                    Datum pocetka: <b:datepicker value="#{festivalBean.festival.datumOd}" required="true" requiredMessage="Morate uneti datum pocetka festivala!"/>
+                    Datum zavrsetka: <b:datepicker value="#{festivalBean.festival.datumDo}" required="true" requiredMessage="Morate uneti datum zavrsetka festivala!"/>
+                    Opis: <b:inputTextarea maxlength="65535" value="#{festivalBean.festival.detalji}" required="true" requiredMessage="Morate uneti detalje za festival!"/>
+                    Broj karata po danu: <b:inputText value="#{festivalBean.festival.kapacitetPoDanu}" required="true" requiredMessage="Morate uneti broj karata po danu!"/>
+                    Broj karata po korisniku: <b:inputText value="#{festivalBean.festival.maxKarataPoKorisniku}" required="true" requiredMessage="Morate uneti broj karata po clanu!"/>
+                    Cena pojedinacne karte: <b:inputText value="#{festivalBean.festival.cenaDan}" required="true" requiredMessage="Morate uneti cenu pojedinacne karte!"/>
+                    Cena paketa: <b:inputText value="#{festivalBean.festival.cenaPaket}" required="true" requiredMessage="Morate uneti cenu paketa karata!"/>
+                    Facebook: <b:inputText value="#{festivalBean.festival.facebook}"/>
+                    Twitter: <b:inputText value="#{festivalBean.festival.twitter}"/>
+                    Instagram: <b:inputText value="#{festivalBean.festival.instagram}"/>
+                    Youtube: <b:inputText value="#{festivalBean.festival.youtube}"/>
+                </b:panelGrid>
+                <p align="right">
+                    <p:commandButton value="Dalje" action="#{festivalBean.sacuvajOsnovneInformacije()}" update=":contentForm"/>
+                </p>
+            </p:fieldset>
+            <p:fieldset id="izvodjacFields" style="margin-bottom:6px;" legend="Nastupi" rendered="#{festivalBean.step == 1}">
+                <b:panelGrid columns="2">
+                    Izvodjac: <b:inputText id="noviIzvodjac" value="#{festivalBean.nastup.izvodjac}"/>
+                    Datum pocetka nastupa:
+                    <b:dateTimePicker id="a" mode="inline" value="#{festivalBean.nastup.datumOd}" showTime="false" />
+                    Datum zavrsetka nastupa:
+                    <b:dateTimePicker id="b" mode="inline" value="#{festivalBean.nastup.datumDo}" showTime="false"/>
+                    Vreme pocetka nastupa:
+                    <b:dateTimePicker id="c" mode="inline" value="#{festivalBean.nastup.vremeOd}" showTime="true" showDate="false"/>
+                    Vreme zavrsetka nastupa:
+                    <b:dateTimePicker id="d" mode="inline" value="#{festivalBean.nastup.vremeDo}" showTime="true" showDate="false"/> 
+                </b:panelGrid>
+                <p align="center">
+                    <b:commandButton value="Dodaj nastup" action="#{festivalBean.dodajNastup()}" process="a, b, c, d, noviIzvodjac" update=":contentForm"/>
+                </p>
+                <p align="right">
+                    <p:commandButton value="Dalje" actionListener="#{festivalBean.predjiNaMedije()}" update=":contentForm"/>
+                </p>
+            </p:fieldset>
+            <p:fieldset style="margin-bottom:6px;" legend="Mediji" rendered="#{festivalBean.step == 2}">
+                <b:panelGrid columns="1">
+                    Dodajte slike festivala:<br/>   
+                    <p:galleria value="#{festivalBean.slike}" var="slika" showCaption="false">
+                        <p:graphicImage title="Slike festivala" value="#{mediaService.image}">
+                            <f:param name="filename" value="#{slika.putanja}"/>
+                        </p:graphicImage>
+                    </p:galleria>
+                    <br/>
+                    <p:fileUpload fileUploadListener="#{festivalBean.uploadSlike}" mode="advanced" dragDropSupport="false" multiple="true" update=":contentForm"  fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                    <br/>
+                    Dodajte videe sa festivala (YouTube linkove):
+                    <b:inputText value="#{festivalBean.videoURL}"/>
+                    <br/>
+                    <p align="center">
+                        <b:commandButton value="Dodaj" action="#{festivalBean.uploadVidea}" update=":contentForm"/>
+                    </p>
+                    <p:fieldset legend="Uvezeni snimci">
+                        <b:dataTable paginated="false" searching="false" value="#{festivalBean.videi}" var="video">
+                            <b:dataTableColumn  label="Snimak">
+                                <p align="center">
+                                    <p:media value="#{video.putanja}" player="flash">
+                                        <f:param name="autoPlay" value="0"/>
+                                    </p:media>
+                                </p>
+                            </b:dataTableColumn>
+                        </b:dataTable>
+                    </p:fieldset>
+                </b:panelGrid>
+                <br/>
+                <p align="center">
+                    <p:commandButton value="Dodaj festival" action="#{festivalBean.sacuvajFestival()}" update=":contentForm"/>
+                </p>
+            </p:fieldset>
+            <p:steps activeIndex="#{festivalBean.step}">
+                <p:menuitem value="Osnovne informacije"/>
+                <p:menuitem value="Nastupi"/>
+                <p:menuitem value="Mediji"/>
+            </p:steps>
+        </h:form>
+    </div>
+</ui:composition>

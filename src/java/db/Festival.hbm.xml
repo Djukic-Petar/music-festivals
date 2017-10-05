@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 10, 2017 9:46:45 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Festival" table="festival" catalog="festivali" optimistic-lock="version">
+        <id name="idFes" type="java.lang.Long">
+            <column name="idFes" />
+            <generator class="identity" />
+        </id>
+        <property name="naziv" type="string">
+            <column name="naziv" length="45" not-null="true" />
+        </property>
+        <property name="datumOd" type="date">
+            <column name="datumOd" length="10" not-null="true" />
+        </property>
+        <property name="datumDo" type="date">
+            <column name="datumDo" length="10" not-null="true" />
+        </property>
+        <property name="mesto" type="string">
+            <column name="mesto" length="45" not-null="true" />
+        </property>
+        <property name="detalji" type="string">
+            <column name="detalji" length="65535" not-null="true" />
+        </property>
+        <property name="kapacitetPoDanu" type="int">
+            <column name="kapacitetPoDanu" not-null="true" />
+        </property>
+        <property name="maxKarataPoKorisniku" type="int">
+            <column name="maxKarataPoKorisniku" not-null="true" />
+        </property>
+        <property name="cenaPaket" type="int">
+            <column name="cenaPaket" not-null="true" />
+        </property>
+        <property name="cenaDan" type="int">
+            <column name="cenaDan" not-null="true" />
+        </property>
+        <property name="pregledi" type="long">
+            <column name="pregledi" not-null="true" />
+        </property>
+        <property name="facebook" type="string">
+            <column name="facebook" length="100" />
+        </property>
+        <property name="twitter" type="string">
+            <column name="twitter" length="100" />
+        </property>
+        <property name="instagram" type="string">
+            <column name="instagram" length="100" />
+        </property>
+        <property name="youtube" type="string">
+            <column name="youtube" length="100" />
+        </property>
+        <property name="otkazano" type="boolean">
+            <column name="otkazano" not-null="true" />
+        </property>
+        <property name="brojKupljenih" type="int">
+            <column name="brojKupljenih" not-null="true" />
+        </property>
+        <set name="galerijas" table="galerija" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="idFes" not-null="true" />
+            </key>
+            <one-to-many class="db.Galerija" />
+        </set>
+        <set name="ocenas" table="ocena" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="idFes" not-null="true" />
+            </key>
+            <one-to-many class="db.Ocena" />
+        </set>
+        <set name="ulaznicas" table="ulaznica" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="idFes" not-null="true" />
+            </key>
+            <one-to-many class="db.Ulaznica" />
+        </set>
+        <set name="nastups" table="nastup" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="idFes" not-null="true" />
+            </key>
+            <one-to-many class="db.Nastup" />
+        </set>
+    </class>
+</hibernate-mapping>

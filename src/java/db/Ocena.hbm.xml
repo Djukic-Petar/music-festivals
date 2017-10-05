@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 10, 2017 9:46:45 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Ocena" table="ocena" catalog="festivali" optimistic-lock="version">
+        <id name="idOce" type="java.lang.Long">
+            <column name="idOce" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="festival" class="db.Festival" fetch="select" lazy="false">
+            <column name="idFes" not-null="true" />
+        </many-to-one>
+        <many-to-one name="korisnik" class="db.Korisnik" fetch="select" lazy="false">
+            <column name="idKor" not-null="true" />
+        </many-to-one>
+        <property name="ocena" type="int">
+            <column name="ocena" not-null="true" />
+        </property>
+        <property name="komentar" type="string">
+            <column name="komentar" not-null="true" />
+        </property>
+        <property name="imeFestivala" type="string">
+            <column name="imeFestivala" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

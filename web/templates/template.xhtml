@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+            <title>Festivali</title>
+        </f:facet>
+
+        <f:facet name="middle">
+            <h:outputStylesheet name="css/bootstrap.css" />
+            <h:outputStylesheet name="css/dashboard.css" />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+            <h:outputScript name="js/bootstrap.js" />
+            <style type="text/css">
+                .ui-growl {
+                    z-index: 999999 !important;
+                }
+            </style>
+        </f:facet>
+
+    </h:head>
+
+    <h:body>
+        <div id="header">
+            <ui:insert name="header"></ui:insert>
+        </div>
+        <b:container fluid="true">
+            <b:row>
+                <div id="leftSidebar">
+                    <ui:insert name="leftSidebar"></ui:insert>
+                </div>
+                <div id="content">
+                    <ui:insert name="content"></ui:insert>
+                </div>
+            </b:row>
+        </b:container>
+
+    </h:body>
+
+</html>

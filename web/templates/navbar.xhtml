@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:b="http://bootsfaces.net/ui">
+    <b:navBar brandHref="#" inverse="true" position="top" sticky="true" style-class="navbar navbar-light bg-primary" style="background-color: #e3f2fd;">
+        <b:navbarLinks pull="left">
+            <b:form>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Pocetna" action="#{navBean.home()}"/>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Rezervacije" action="#{reservationBean.prikaziSveRezervacije()}" rendered="#{loginBean.regularUser}"/>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Registracija" action="#{navBean.registracija()}" rendered="#{loginBean.unregistered}"/>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Promena lozinke" action="#{navBean.promenaLozinke()}" rendered="#{!loginBean.unregistered}"/>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Login" action="#{loginBean.showLogin()}" rendered="#{loginBean.unregistered}"/>
+            
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Dodaj" action="#{adminBean.prikaziDodavanjeFestivala()}" rendered="#{loginBean.admin}"/>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Pretraga" action="/admin/pretragaFestivala" rendered="#{loginBean.admin}"/>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="CSV" action="#{adminBean.prikaziImportCSV}" rendered="#{loginBean.admin}"/>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="JSON" action="#{adminBean.prikaziImportJSON}" rendered="#{loginBean.admin}"/>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Prodaja" action="#{reservationSaleBean.prikaziRezervaciju}" rendered="#{loginBean.admin}"/>
+                
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Najskorije ulogovani" action="#{adminBean.prikaziNajskorijeUlogovane}" rendered="#{loginBean.admin}"/>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Odobravanje" action="#{adminBean.prikaziNeodobreneKorisnike}" rendered="#{loginBean.admin}"/>
+            
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Zavrsi" action="#{loginBean.logout()}" rendered="#{!loginBean.unregistered}"/>
+            
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Pet najbolje ocenjenih festivala" action="#{searchBean.petNajboljeOcenjenih()}" rendered="#{loginBean.unregistered}"/>
+                <b:navCommandLink class="navbar-brand navbar-brand-text" value="Pretraga festivala" action="/index" rendered="#{loginBean.unregistered}"/>
+            </b:form>
+        </b:navbarLinks>
+    </b:navBar>
+</ui:composition>

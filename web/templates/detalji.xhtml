@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h1>#{detailsBean.festival.naziv}</h1>
+        <hr/>
+        <h3>Osnovne informacije</h3><br/>
+            <b:panelGrid columns="2">
+                Mesto: <h:outputText value="#{detailsBean.festival.mesto}"/>
+                Datum pocetka: <h:outputText value="#{detailsBean.festival.datumOd}"/>
+                Datum zavrsetka: <h:outputText value="#{detailsBean.festival.datumDo}"/>
+                Opis: <h:outputText value="#{detailsBean.festival.detalji}"/>
+                Broj karata po danu: <h:outputText value="#{detailsBean.festival.kapacitetPoDanu}"/>
+                Broj karata po korisniku: <h:outputText value="#{detailsBean.festival.maxKarataPoKorisniku}"/>
+            </b:panelGrid>
+        <br/>
+        <h3>Izvodjaci</h3><br/>
+            <b:panelGrid columns="1">
+                <b:dataTable value="#{detailsBean.festival.getNastups()}" var="nastup" paginated="false" searching="false">
+                        <b:dataTableColumn value="#{nastup.izvodjac}"/>
+                        <b:dataTableColumn label="Datum pocetka">
+                            #{nastup.datumOd}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="Datum kraja">
+                            #{nastup.datumDo}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="Vreme pocetka">
+                            #{nastup.vremeOd}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="Vreme kraja">
+                            #{nastup.vremeDo}
+                        </b:dataTableColumn>
+                    </b:dataTable>
+            </b:panelGrid>
+        <br/>
+        <h3>Galerija</h3><br/>
+            <b:panelGrid columns="1">
+                <p:galleria value="#{detailsBean.slike}" var="slika" showCaption="false">
+                    <p:graphicImage title="Slike festivala" value="#{mediaService.image}">
+                        <f:param name="filename" value="#{slika.putanja}"/>
+                    </p:graphicImage>
+                </p:galleria>
+                <br/>
+                Dodajte sliku:
+                <br/>
+                <b:form>
+                    <p:fileUpload fileUploadListener="#{detailsBean.uploadSlike}" mode="advanced" dragDropSupport="false" multiple="true" update=":contentForm"  fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                </b:form>
+                <br/>
+                Videi sa festivala:
+                <b:dataTable paginated="false" searching="false" value="#{detailsBean.videi}" var="video">
+                    <b:dataTableColumn  label="Snimak">
+                        <p align="center">
+                            <p:media value="#{video.putanja}" player="flash">
+                                <f:param name="autoPlay" value="0"/>
+                            </p:media>
+                        </p>
+                    </b:dataTableColumn>
+                </b:dataTable>
+                <br/>
+                Dodajte video (YouTube link):
+                <b:inputText value="#{detailsBean.videoURL}"/>
+                <br/>
+                <p align="center">
+                    <b:commandButton value="Dodaj" action="#{detailsBean.uploadVidea}" update=":contentForm"/>
+                </p>
+            </b:panelGrid>
+        <br/>
+        <h3>Utisci</h3><br/>
+            <b:panelGrid columns="1">
+                <b:dataTable value="#{detailsBean.oceneZaFestival()}" var="ocena" searching="false" paginated="false">
+                    <b:dataTableColumn label="Korisnik" styleClass="col-xs-1 col-sm-1 col-md-1 col-lg-1" value="#{ocena.getKorisnik().getUsername()}"/>
+                    <b:dataTableColumn styleClass="col-xs-5 col-sm-5 col-md-5 col-lg-5" label="Komentar" value="#{ocena.komentar}"/>
+                    <b:dataTableColumn styleClass="col-xs-1 col-sm-1 col-md-1 col-lg-1" label="Ocena">
+                        <p:rating value="#{ocena.ocena}" readonly="true"/>
+                    </b:dataTableColumn>
+                </b:dataTable>
+            </b:panelGrid>
+        <br/>
+        <h3>Ostavite komentar</h3><br/>
+            <b:form>
+                <b:panelGrid columns="1" rendered="#{detailsBean.canRate()}">
+                    Komentar:
+                    <b:inputTextarea value="#{detailsBean.komentar}"/>
+                    Ocena:
+                    <p:rating value="#{detailsBean.ocena}"/>
+                    <br/>
+                    <p align="center">
+                        <b:commandButton value="Posalji" action="#{detailsBean.dodajOcenu()}" update=":contentForm"/>
+                    </p>
+                </b:panelGrid>
+            </b:form>
+        <h3>Linkovi</h3><br/>
+            <b:form>
+                <b:panelGrid columns="2">
+                    Facebook: <p:link href="#{detailsBean.festival.facebook}" value="#{detailsBean.festival.facebook}"/>
+                    Twitter: <p:link href="#{detailsBean.festival.twitter}" value="#{detailsBean.festival.twitter}"/>
+                    Instagram: <p:link href="#{detailsBean.festival.instagram}" value="#{detailsBean.festival.instagram}"/>
+                    Youtube: <p:link href="#{detailsBean.festival.youtube}" value="#{detailsBean.festival.youtube}"/>
+                </b:panelGrid>
+            </b:form>
+    </div>
+</ui:composition>

@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h3>Najskorije ulogovani korisnici</h3>
+        <hr/>
+        <h:form>
+            <p:dataTable value="#{recentBean.korisnici}" var="korisnik">
+                <p:column>
+                    <f:facet name="header">Korisnicko ime</f:facet>
+                    <h:outputText value="#{korisnik.username}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Ime</f:facet>
+                    <h:outputText value="#{korisnik.ime}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Prezime</f:facet>
+                    <h:outputText value="#{korisnik.prezime}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Vreme poslednje prijave</f:facet>
+                    <h:outputText value="#{korisnik.poslednjaPrijava}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </div>
+</ui:composition>
+

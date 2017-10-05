@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h1>Dobro dosli, #{loginBean.korisnik.ime} #{loginBean.korisnik.prezime}!</h1>
+        <hr/>
+        <h4>Festivali s najvise pregleda:</h4>
+        <b:dataTable value="#{loginBean.najvisePregleda}" var="festival" searching="false" paginated="false">
+            <b:dataTableColumn value="#{festival.naziv}" orderable="false"/>
+            <b:dataTableColumn value="#{festival.mesto}" orderable="false"/>
+            <b:dataTableColumn value="#{festival.datumOd}" label="Datum pocetka" orderable="false"/>
+            <b:dataTableColumn value="#{festival.datumDo}" label="Datum zavrsetka" orderable="false"/>
+            <b:dataTableColumn value="#{festival.pregledi}" orderable="false"/>
+        </b:dataTable>
+        <br/>
+        <h4>Festivali s najvise rezervisanih karata:</h4>
+        <b:dataTable value="#{loginBean.najviseKarata}" var="festival" searching="false" paginated="false">
+            <b:dataTableColumn value="#{festival.naziv}" orderable="false"/>
+            <b:dataTableColumn value="#{festival.mesto}" orderable="false"/>
+            <b:dataTableColumn value="#{festival.datumOd}" label="Datum pocetka" orderable="false"/>
+            <b:dataTableColumn value="#{festival.datumDo}" label="Datum zavrsetka" orderable="false"/>
+            <b:dataTableColumn value="#{festival.brojKupljenih}" label="Broj rezervacija" orderable="false"/>
+        </b:dataTable>
+    </div>
+</ui:composition>

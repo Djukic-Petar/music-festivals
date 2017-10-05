@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+
+    <b:container fluid="true">
+        <b:row>
+            <div class="col-sm-3 col-md-2">
+                <h:form id="form" styleClass="sidebar">
+                    <p:calendar value="#{sidebarBean.datumSidebar}" id="datePicker" mindate="#{sidebarBean.danas}" mode="inline">
+                        <p:ajax event="dateSelect" listener="#{sidebarBean.odabranDatum()}" update="contentForm"/>
+                    </p:calendar>
+                </h:form>
+            </div>
+        </b:row>
+    </b:container>
+</ui:composition>
+

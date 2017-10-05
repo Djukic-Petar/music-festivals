@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h3>Korisnici koji cekaju odobrenje</h3>
+        <hr/>
+        <h:form>
+            <p:dataTable value="#{unapprovedBean.korisnici}" var="korisnik" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10">
+                <p:column headerText="Username">
+                    <h:outputText value="#{korisnik.username}"/>
+                </p:column>
+                <p:column headerText="Ime">
+                    <h:outputText value="#{korisnik.ime}"/>
+                </p:column>
+                <p:column headerText="Prezime">
+                    <h:outputText value="#{korisnik.prezime}"/>
+                </p:column>
+                <p:column headerText="Vreme registracije">
+                    <h:outputText value="#{korisnik.poslednjaPrijava}"/>
+                </p:column>
+                <p:column headerText="Odobravanje">
+                    <h:commandButton value="Odobri" actionListener="#{unapprovedBean.approve(korisnik.username)}" immediate="false"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </div>
+</ui:composition>

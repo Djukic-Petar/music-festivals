@@ -1,0 +1,4 @@
+Primefaces 6 - http://www.primefaces.org/
+Bootsfaces - https://www.bootsfaces.net/download.jsf
+javacsv - https://sourceforge.net/projects/javacsv/
+hibernate - netbeans

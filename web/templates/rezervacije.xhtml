@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h1>Rezervacije</h1>
+        <hr/>
+            <b:dataTable value="#{reservationBean.getUlaznicas()}" var="ulaznica" searching="false">
+                <b:dataTableColumn label="ID rezervacije" orderable="false">
+                    <p style="color:#{reservationBean.getColor(ulaznica)};">
+                        #{ulaznica.idUla}
+                    </p>
+                </b:dataTableColumn>
+                <b:dataTableColumn label="Festival" orderable="false">
+                    <p style="color:#{reservationBean.getColor(ulaznica)};">
+                        #{ulaznica.festival.naziv}
+                    </p>
+                </b:dataTableColumn>
+                <b:dataTableColumn label="Kolicina" orderable="false">
+                    <p style="color:#{reservationBean.getColor(ulaznica)};">
+                        #{ulaznica.kolicina}
+                    </p>
+                </b:dataTableColumn>
+                <b:dataTableColumn label="Vreme rezervacije" orderable="false">
+                    <p style="color:#{reservationBean.getColor(ulaznica)};">
+                        #{ulaznica.vremeKreiranja}
+                    </p>
+                </b:dataTableColumn>
+                <b:dataTableColumn label="Opcije" orderable="false">
+                    <b:commandButton value="Otkazi" action="#{reservationBean.otkazi(ulaznica)}" rendered="#{reservationBean.canCancel(ulaznica)}"/>
+                </b:dataTableColumn>
+            </b:dataTable>
+    </div>
+</ui:composition>

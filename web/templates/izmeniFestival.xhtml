@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h3>Izmeni festival</h3>
+        <hr/>
+        <h:form>
+            <p:messages/>
+            
+                <b:panelGrid columns="2" rendered="#{editBean.basic}">
+                    <h3>Osnovno</h3><br/><b:column/>
+                    Naziv: <b:inputText value="#{editBean.festival.naziv}"/>
+                    Mesto: <b:inputText value="#{editBean.festival.mesto}"/>
+                    Datum pocetka: <b:datepicker value="#{editBean.festival.datumOd}"/>
+                    Datum zavrsetka: <b:datepicker value="#{editBean.festival.datumDo}"/>
+                    Opis: <b:inputTextarea maxlength="65535" value="#{editBean.festival.detalji}"/>
+                    Broj karata po danu: <b:inputText value="#{editBean.festival.kapacitetPoDanu}"/>
+                    Broj karata po korisniku: <b:inputText value="#{editBean.festival.maxKarataPoKorisniku}"/>
+                    Cena pojedinacne karte: <b:inputText value="#{editBean.festival.cenaDan}"/>
+                    Cena paketa: <b:inputText value="#{editBean.festival.cenaPaket}"/>
+                    Facebook: <b:inputText value="#{editBean.festival.facebook}"/>
+                    Twitter: <b:inputText value="#{editBean.festival.twitter}"/>
+                    Instagram: <b:inputText value="#{editBean.festival.instagram}"/>
+                    Youtube: <b:inputText value="#{editBean.festival.youtube}"/>
+                </b:panelGrid>
+            
+                <b:panelGrid columns="2" rendered="#{editBean.basic}">
+                    <h3>Izvodjaci</h3><br/><b:column/>
+                    <b:dataTable value="#{editBean.nastupi}" var="nastup" paginated="false" searching="false">
+                        <b:dataTableColumn value="#{nastup.izvodjac}"/>
+                        <b:dataTableColumn label="Datum pocetka">
+                            #{editBean.dates.get(nastup.getIdNas()).datumOdString}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="Datum kraja">
+                            #{editBean.dates.get(nastup.getIdNas()).datumDoString}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="Vreme pocetka">
+                            #{editBean.dates.get(nastup.getIdNas()).vremeOdString}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="Vreme kraja">
+                            #{editBean.dates.get(nastup.getIdNas()).vremeDoString}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="Izmena">
+                            <b:commandButton actionListener="#{editBean.izmeniNastup(nastup)}" value="Izmeni" update=":contentForm"/>
+                        </b:dataTableColumn>
+                    </b:dataTable>
+                </b:panelGrid>
+            
+                <b:panelGrid columns="1" rendered="#{editBean.basic}">
+                    <h3>Galerija</h3><br/><b:column/>
+                    Dodajte slike festivala:
+                    <p:galleria value="#{editBean.slike}" var="slika" showCaption="false">
+                        <p:graphicImage title="Slike festivala" value="#{mediaService.image}">
+                            <f:param name="filename" value="#{slika.putanja}"/>
+                        </p:graphicImage>
+                    </p:galleria>
+                    <br/>
+                    <p:fileUpload fileUploadListener="#{editBean.uploadSlike}" mode="advanced" dragDropSupport="false" multiple="true" update=":contentForm"  fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                    <br/>
+                    Dodajte videe sa festivala (YouTube linkove):
+                    <b:inputText value="#{editBean.videoURL}"/>
+                    <br/>
+                    <p align="center">
+                        <b:commandButton value="Dodaj" action="#{editBean.uploadVidea}" update=":contentForm"/>
+                    </p>
+                </b:panelGrid>
+                <br/>
+                <p align="center">
+                    <p:commandButton value="Sacuvaj izmene" action="#{editBean.sacuvaj}" rendered="#{editBean.basic}"/>
+                    <p:commandButton value="Odustani" action="#{editBean.odustani}" rendered="#{editBean.basic}"/>
+                </p>
+                
+                <b:panelGrid columns="2" rendered="#{!editBean.basic}">
+                    <h3>Nastup</h3><br/><b:column/>
+                    Izvodjac: <b:inputText id="noviIzvodjac" value="#{editBean.nastup.izvodjac}"/>
+                    Datum pocetka nastupa:
+                    <b:dateTimePicker id="a" mode="inline" value="#{editBean.nastup.datumOd}" showTime="false" />
+                    Datum zavrsetka nastupa:
+                    <b:dateTimePicker id="b" mode="inline" value="#{editBean.nastup.datumDo}" showTime="false"/>
+                    Vreme pocetka nastupa:
+                    <b:dateTimePicker id="c" mode="inline" value="#{editBean.nastup.vremeOd}" showTime="true" showDate="false"/>
+                    Vreme zavrsetka nastupa:
+                    <b:dateTimePicker id="d" mode="inline" value="#{editBean.nastup.vremeDo}" showTime="true" showDate="false"/> 
+                </b:panelGrid>
+                <p align="center">
+                    <b:commandButton value="Sacuvaj" action="#{editBean.sacuvajNastup}" process="a, b, c, d, noviIzvodjac" update=":contentForm" rendered="#{!editBean.basic}"/>
+                    <b:commandButton value="Odustani" action="#{editBean.odustaniNastup}" process="a, b, c, d, noviIzvodjac" update=":contentForm" rendered="#{!editBean.basic}"/>
+                </p>
+        </h:form>
+    </div>
+</ui:composition>

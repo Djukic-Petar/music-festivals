@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 10, 2017 9:46:45 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Nastup" table="nastup" catalog="festivali" optimistic-lock="version">
+        <id name="idNas" type="java.lang.Long">
+            <column name="idNas" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="festival" class="db.Festival" fetch="select">
+            <column name="idFes" not-null="true" />
+        </many-to-one>
+        <property name="izvodjac" type="string">
+            <column name="izvodjac" length="45" not-null="true" />
+        </property>
+        <property name="datumOd" type="date">
+            <column name="datumOd" length="10" not-null="true" />
+        </property>
+        <property name="datumDo" type="date">
+            <column name="datumDo" length="10" not-null="true" />
+        </property>
+        <property name="vremeOd" type="time">
+            <column name="vremeOd" length="8" not-null="true" />
+        </property>
+        <property name="vremeDo" type="time">
+            <column name="vremeDo" length="8" not-null="true" />
+        </property>
+        <property name="otkazano" type="boolean">
+            <column name="otkazano" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

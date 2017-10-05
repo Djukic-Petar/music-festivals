@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h1>Registracija</h1>
+        <hr/>
+        <h:form>
+            <p:messages id="messages" showDetail="true" autoUpdate="true">
+                <h:panelGrid columns="2" cellpadding="5">
+                    Ime: <p:inputText value="#{registerBean.ime}" required="true" requiredMessage="Morate da unesete ime!"/>
+                    Prezime: <p:inputText value="#{registerBean.prezime}" required="true" requiredMessage="Morate da unesete prezime!"/>
+                    Korisnicko ime: <p:inputText value="#{registerBean.username}" required="true" requiredMessage="Morate da unesete username!"/>
+                    Lozinka: <p:password value="#{registerBean.password}" required="true" requiredMessage="Morate da unesete lozinku!" match="confirm" feedback="true" promptLabel="Unesite lozinku!" weakLabel="Slaba lozinka! :(" goodLabel="Osrednja lozinka! :|" strongLabel="Jaka lozinka! :D" />
+                    Potvrda lozinke: <p:password id="confirm" feedback="false" required="true" requiredMessage="Morate da unesete potvrdu lozinke!"/>
+                    Telefon: <p:inputText value="#{registerBean.telefon}" required="true" requiredMessage="Morate da unesete telefon!"/>
+                    Elektronska posta: <p:inputText value="#{registerBean.email}" required="true" requiredMessage="Morate da unesete email!"/>
+                    <p:commandButton value="Registruj se" update=":contentForm" action="#{registerBean.register()}" process="@form" validateClient="true"/>
+                </h:panelGrid>
+            </p:messages>
+        </h:form>
+    </div>
+</ui:composition>

@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h1>Pretraga festivala</h1>
+        <hr/>
+            <b:form>
+                <b:panelGrid columns="2">
+                    Naziv: <b:inputText value="#{searchBean.naziv}"/>
+                    Mesto: <b:inputText value="#{searchBean.mesto}"/>
+                    Datum pocetka: <b:datepicker value="#{searchBean.datumOd}"/>
+                    Datum zavrsetka: <b:datepicker value="#{searchBean.datumDo}"/>
+                    Izvodjac: <b:inputText value="#{searchBean.izvodjac}"/>
+                </b:panelGrid>
+                <br/>
+                <p align="center">
+                    <b:commandButton value="Pretrazi" action="#{searchBean.search()}" update=":contentForm"/>
+                </p>
+            </b:form>
+        <br/>
+        <h3>Rezultati</h3><br/>
+            <b:dataTable value="#{searchBean.festivali}" var="festival" searching="false">
+                <b:dataTableColumn value="#{festival.naziv}" orderable="false"/>
+                <b:dataTableColumn value="#{festival.mesto}" orderable="false"/>
+                <b:dataTableColumn value="#{festival.datumOd}" label="Datum pocetka" orderable="false"/>
+                <b:dataTableColumn value="#{festival.datumDo}" label="Datum zavrsetka" orderable="false"/>
+                <b:dataTableColumn label="Opcije">
+                    <b:commandButton action="#{editBean.prikaziEdit(festival)}" value="Izmeni"/>
+                    <b:commandButton actionListener="#{cancelBean.cancel(festival)}" value="Otkazi" ajax="true" update=":contentForm"/>
+                    <b:commandButton action="#{saleBean.prikaziProdaju(festival)}" value="Prodaj karte"/>
+                </b:dataTableColumn>
+            </b:dataTable>
+    </div>
+</ui:composition>

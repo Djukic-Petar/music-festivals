@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h1>Rezervacija za festival #{reservationBean.festival.naziv}</h1>
+        <hr/>
+        <h3>Podaci o rezervaciji</h3><br/>
+            <b:form>
+                <b:panelGrid columns="1">
+                    Kolicina: <b:inputText value="#{reservationBean.kolicina}"/>
+                    <br/>
+                    Datum:
+                    <p:calendar mindate="#{reservationBean.festival.datumOd}" maxdate="#{reservationBean.festival.datumDo}" value="#{reservationBean.dan}"/>
+                    <br/>
+                    Izaberite tip karata:
+                    <b:selectOneMenu value="#{reservationBean.paket}">
+                        <f:selectItem itemLabel="Paket" itemValue="true"/>
+                        <f:selectItem itemLabel="Karta za jedan dan" itemValue="false"/>
+                    </b:selectOneMenu>
+                    <b:commandButton value="Rezervisi" action="#{reservationBean.rezervisi()}"/>
+                    <b:commandButton value="Odustani" action="#{reservationBean.odustani()}"/>
+                </b:panelGrid>
+            </b:form>
+    </div>
+</ui:composition>

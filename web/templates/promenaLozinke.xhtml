@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h1>Promena lozinke</h1>
+        <hr/>
+        <h:form>
+            <p:messages id="messages" showDetail="true" autoUpdate="true">
+                <h:panelGrid columns="2" cellpadding="5">
+                    Stara lozinka: <p:password value="#{userBean.oldPassword}" required="true" requiredMessage="Morate da unesete staru lozinku!"/>
+                    Potvrda lozinke: <p:password value="#{userBean.newPassword}" required="true" requiredMessage="Morate da unesete novu lozinku!" match="confirm" feedback="true" promptLabel="Unesite lozinku!" weakLabel="Slaba lozinka! :(" goodLabel="Osrednja lozinka! :|" strongLabel="Jaka lozinka! :D"/>
+                    Potvrda lozinke: <p:password id="confirm" feedback="false" required="true" requiredMessage="Morate da unesete potvrdu lozinke!"/>
+                    <p:commandButton value="Promeni" action="#{userBean.promeniPassword()}" validateClient="true" update=":contentForm" process="@form"/>
+                </h:panelGrid>
+            </p:messages>
+        </h:form>
+    </div>
+</ui:composition>

@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h1>Festivali</h1>
+        <hr/>
+        <p:fieldset legend="Festivali za dan #{sidebarBean.datumSidebarString}">
+            <b:dataTable value="#{sidebarBean.festivali}" var="festival" searching="false">
+                <b:dataTableColumn value="#{festival.naziv}" orderable="false"/>
+                <b:dataTableColumn value="#{festival.mesto}" orderable="false"/>
+                <b:dataTableColumn value="#{festival.datumOd}" label="Datum pocetka" orderable="false"/>
+                <b:dataTableColumn value="#{festival.datumDo}" label="Datum zavrsetka" orderable="false"/>
+            </b:dataTable>
+        </p:fieldset>
+    </div>
+</ui:composition>

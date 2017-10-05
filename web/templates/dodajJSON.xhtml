@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h1>Uvoz festivala - JSON</h1>
+        <hr/>
+        <h:form>
+            <p:messages/>
+            <p:fieldset styleClass="form-group" style="margin-bottom:6px;" legend="Uvoz datoteke" rendered="#{importJSONBean.step == 0}">
+                <b:panelGrid columns="1">
+                    <p:fileUpload fileUploadListener="#{importJSONBean.ucitaj}" mode="advanced" dragDropSupport="false" multiple="false" update=":contentForm"  fileLimit="10" allowTypes="/(\.|\/)(json)$/"/>
+                </b:panelGrid>
+                <p align="right">
+                    <p:commandButton value="Dalje" action="#{importJSONBean.drugiKorak}" update=":contentForm"/>
+                </p>
+            </p:fieldset>
+            <p:fieldset styleClass="form-group" style="margin-bottom:6px;" legend="Mediji" rendered="#{importJSONBean.step == 1}">
+                <b:panelGrid columns="1">
+                    Dodajte slike festivala:
+                    <p:galleria value="#{importJSONBean.slike}" var="slika" showCaption="false">
+                        <p:graphicImage title="Slike festivala" value="#{mediaService.image}">
+                            <f:param name="filename" value="#{slika.putanja}"/>
+                        </p:graphicImage>
+                    </p:galleria>
+                    <br/>
+                    <p:fileUpload fileUploadListener="#{importJSONBean.uploadSlike}" mode="advanced" dragDropSupport="false" multiple="true" update=":contentForm" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                    <br/>
+                    Dodajte videe sa festivala (YouTube linkove):
+                    <b:inputText value="#{importJSONBean.videoURL}"/>
+                    <br/>
+                    <p align="center">
+                        <b:commandButton value="Dodaj" action="#{importJSONBean.uploadVidea}" update=":contentForm"/>
+                    </p>
+                    <p align="right">
+                        <p:commandButton value="Dalje" actionListener="#{importJSONBean.treciKorak}" update=":contentForm"/>
+                    </p>
+                </b:panelGrid>
+            </p:fieldset>
+            <p:fieldset styleClass="form-group" style="margin-bottom:6px;" legend="Potvrda" rendered="#{importJSONBean.step == 2}">
+                <b:panelGrid columns="2">
+                    Naziv:
+                    <h:outputText value="#{importJSONBean.festival.naziv}"/>
+                    Mesto:
+                    <h:outputText value="#{importJSONBean.festival.mesto}"/>
+                    Datum pocetka:
+                    <h:outputText value="#{importJSONBean.festival.datumOd}"/>
+                    Datum zavrsetka:
+                    <h:outputText value="#{importJSONBean.festival.datumDo}"/>
+                    Cena po danu:
+                    <h:outputText value="#{importJSONBean.festival.cenaDan}"/>
+                    Cena za paket:
+                    <h:outputText value="#{importJSONBean.festival.cenaPaket}"/>
+                    Maksimalan broj karata po korisniku:
+                    <h:outputText value="#{importJSONBean.festival.maxKarataPoKorisniku}"/>
+                    Broj karata po danu:
+                    <h:outputText value="#{importJSONBean.festival.kapacitetPoDanu}"/>
+                </b:panelGrid>
+                <br/>
+                Nastupi:
+                <br/>
+                <b:dataTable value="#{importJSONBean.nastupi}" var="nastup" paginated="false" searching="false">
+                    <b:dataTableColumn value="#{nastup.izvodjac}"/>
+                    <b:dataTableColumn label="Datum pocetka" value="#{importJSONBean.getDatumOdString(nastup)}"/>
+                    <b:dataTableColumn label="Datum zavrsetka" value="#{importJSONBean.getDatumDoString(nastup)}"/>
+                    <b:dataTableColumn label="Vreme pocetka" value="#{importJSONBean.getVremeOdString(nastup)}"/>
+                    <b:dataTableColumn label="Vreme zavrsetka" value="#{importJSONBean.getVremeDoString(nastup)}"/>
+                </b:dataTable>
+                <br/>
+                Slike sa festivala:
+                <br/>
+                <p:galleria value="#{importJSONBean.slike}" var="slika" showCaption="false">
+                    <p:graphicImage title="Slike festivala" value="#{mediaService.image}">
+                        <f:param name="filename" value="#{slika.putanja}"/>
+                    </p:graphicImage>
+                </p:galleria>
+                <br/>Videi sa festivala:<br/>
+                <b:dataTable paginated="false" searching="false" value="#{festivalBean.videi}" var="video">
+                    <b:dataTableColumn  label="Snimak">
+                        <p align="center">
+                            <p:media value="#{video.putanja}" player="flash">
+                                <f:param name="autoPlay" value="0"/>
+                            </p:media>
+                        </p>
+                    </b:dataTableColumn>
+                </b:dataTable>
+                <br/>
+                <p align="center">
+                    <b:commandButton value="Potvrdi" action="#{importJSONBean.potvrdi}" update=":contentForm"/>
+                    <b:commandButton value="Otkazi" action="#{importJSONBean.otkazi}" update=":contentForm"/>
+                </p>
+            </p:fieldset>
+            <p:steps activeIndex ="#{importJSONBean.step}">
+                <p:menuitem value="Uvoz datoteke"/>
+                <p:menuitem value="Mediji"/>
+                <p:menuitem value="Potvrda"/>
+            </p:steps>
+        </h:form>
+    </div>
+</ui:composition>

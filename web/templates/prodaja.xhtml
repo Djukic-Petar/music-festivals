@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="col-sm-7 col-md-offset-3 col-md-8 main col-sm-offset-4">
+        <h1>Prodaja</h1>
+        <hr/>
+        <b:form>
+            <p:messages/>
+            <b:panelGrid columns="1">
+                Cena za dan: #{saleBean.festival.cenaDan}
+                Cena paketa: #{saleBean.festival.cenaPaket}
+                Paket ulaznica: <b:selectBooleanCheckbox value="#{saleBean.paket}"/>
+                Odabir dana (ako nije paket):
+                <p:calendar value="#{saleBean.datum}" mindate="#{saleBean.festival.datumOd}" maxdate="#{saleBean.festival.datumDo}" mode="inline"/>
+                Kolicina: <b:inputText value="#{saleBean.kolicina}" required="true" requiredMessage="Morate uneti kolicinu!"/>
+                <b:commandButton value="Prodaj" action="#{saleBean.prodaj()}"/>
+            </b:panelGrid>
+        </b:form>
+    </div>
+</ui:composition>
